@@ -1,23 +1,43 @@
 <script setup>
-import { ref } from 'vue';
 import { useNoteStore } from '../stores/note_store';
+import { useRouter } from 'vue-router';
+
 const noteStore = useNoteStore();
+const router = useRouter();
+
+const goEdit = (id) => {
+  router.push({ name: 'edit', params: { id } });
+};
+
+const markedPinned = (id) => {
+  noteStore.markedPinned(id);
+};
 </script>
+
 <template>
   <main id="result" class="container mt-4">
     <div class="row d-flex justify-content-start">
-      <div v-for="note in noteStore.notes" class="col-4 mr-2 mb-4">
+      <div
+        v-for="note in noteStore.notes"
+        :key="note.id"
+        class="col-4 mr-2 mb-4"
+      >
         <router-link :to="{ name: 'edit', params: { id: note.id } }">
           <div class="card">
-            <i
-              class="fa-solid fa-thumbtack me-3 rotate"
-              @click="markedPinned(note.id)"
-              v-if="note.pinned"
-            ></i>
             <div class="card-body">
-              <h5 class="card-title">{{ note.title }}</h5>
+              <div class="d-flex justify-content-between align-items-start">
+                <h5 class="card-title">{{ note.title }}</h5>
+                <i
+                  class="fa-solid fa-thumbtack rotate"
+                  @click="markedPinned(note.id)"
+                  v-if="note.pinned"
+                ></i>
+              </div>
               <hr />
-              <p class="card-text">{{ note.content }}</p>
+              <!-- 預設用兩行截斷 -->
+              <p class="card-text clamp">
+                {{ note.content }}
+              </p>
             </div>
           </div>
         </router-link>
@@ -27,11 +47,6 @@ const noteStore = useNoteStore();
 </template>
 
 <style scoped>
-.card i {
-  position: relative;
-  top: 10px;
-  left: 10px;
-}
 .card {
   transition: all 0.3s;
 }
@@ -45,10 +60,19 @@ a {
   width: 100%;
 }
 .rotate {
-  position: absolute;
-  top: 10px;
-  left: 10px;
   color: red;
   transform: rotate(45deg);
+}
+.clamp {
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: normal;
+  line-height: 1.4;
+  min-height: calc(1.4em * 2);
+  margin-bottom: 0;
 }
 </style>

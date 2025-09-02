@@ -1,6 +1,11 @@
 <script setup>
 import { reactive } from 'vue';
 import { useNoteStore } from '../stores/note_store';
+
+// 定義發送事件 'selectNote'
+const emit = defineEmits(['selectNote']);
+
+// 取得 NoteStore 實例及相關方法
 const noteStore = useNoteStore();
 const { selectedNote, deleteNote, markedPinned } = noteStore;
 const notes = reactive(noteStore.notes);
@@ -40,11 +45,31 @@ const confirmDelete = () => {
           ><button class="btn btn-primary">新增</button>
         </router-link>
       </div>
-
+      <h5 class="pt-3"><i class="fa-solid fa-thumbtack"></i>&nbsp;重要</h5>
       <ul class="list-group">
         <li
           class="list-group-item d-flex justify-content-between"
-          v-for="note in notes"
+          v-for="note in noteStore.pinnedNotes"
+          :key="note.id"
+        >
+          <router-link :to="{ name: 'edit', params: { id: note.id } }">
+            <span class="note-title">{{ note.title }}</span>
+          </router-link>
+          <div class="icon-group d-flex gap-1 align-items-center">
+            <i
+              :class="['fa-solid fa-thumbtack', { rotate: note.pinned }]"
+              @click="markedPinned(note.id)"
+            ></i>
+            <i class="fa-solid fa-trash" @click="showDeleteModal(note)"></i>
+          </div>
+        </li>
+      </ul>
+      <h5 class="pt-3"><i class="fa-solid fa-list"></i>&nbsp;全部</h5>
+      <ul class="list-group">
+        <li
+          class="list-group-item d-flex justify-content-between"
+          v-for="note in noteStore.allNotes"
+          :key="note.id"
         >
           <router-link :to="{ name: 'edit', params: { id: note.id } }">
             <span class="note-title">{{ note.title }}</span>

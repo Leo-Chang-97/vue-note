@@ -7,13 +7,15 @@ export const useNoteStore = defineStore('notes', {
       {
         id: 1,
         title: '旅行計畫',
-        content: '明年暑假想去東京旅遊，準備好機票和住宿了。',
+        content:
+          '明年暑假想去東京旅遊，準備好機票和住宿了。計劃參觀淺草寺、銀座購物區、東京鐵塔和迪士尼樂園。還要品嚐當地的壽司、拉麵和各種日式美食，這次旅行一定會很充實和有意義。',
         pinned: false,
       },
       {
         id: 2,
         title: '學習計畫',
-        content: '每天晚上花一小時學習新技術，提升自己的能力。',
+        content:
+          '每天晚上花一小時學習新技術，提升自己的能力。目前正在學習 Vue.js 框架，包括組件開發、狀態管理、路由配置等。希望能夠掌握前端開發的核心技能，為未來的職業發展打下堅實的基礎。',
         pinned: false,
       },
       {
@@ -35,6 +37,10 @@ export const useNoteStore = defineStore('notes', {
         pinned: false,
       },
     ],
+    isLoaded: false,
+    selectedNoteId: null,
+    keyword: null, // 當前選擇的 note 索引值
+    searchResults: [],
     posts: [],
   }),
 
