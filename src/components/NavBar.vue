@@ -32,8 +32,9 @@ const clearPlaceholder = () => {
       <!-- <a href="https://vite.dev" target="_blank">
         <img src="/vite.svg" class="logo" alt="Vite logo" />
       </a> -->
-      <router-link :to="{ name: 'grid' }">
+      <router-link :to="{ name: 'grid' }" class="d-flex align-items-center">
         <img src="../assets/vue.svg" class="logo vue" alt="Vue logo" />
+        <span class="fs-5 fw-medium text-dark">Vue筆記頁面練習</span>
       </router-link>
       <button
         class="navbar-toggler"
@@ -48,11 +49,7 @@ const clearPlaceholder = () => {
       </button>
       <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-          <li class="nav-item">
-            <a class="nav-link fs-5" aria-current="page" href="#"
-              >Vue筆記頁面練習</a
-            >
-          </li>
+          <li class="nav-item"></li>
         </ul>
         <form class="d-flex" @submit.prevent="$emit('search', keyword)">
           <input

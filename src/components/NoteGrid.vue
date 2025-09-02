@@ -15,12 +15,12 @@ const markedPinned = (id) => {
 </script>
 
 <template>
-  <main id="result" class="container mt-4">
+  <main id="result" class="container-lg mt-lg-4 mt-2 p-0">
     <div class="row d-flex justify-content-start">
       <div
         v-for="note in noteStore.notes"
         :key="note.id"
-        class="col-4 mr-2 mb-4"
+        class="col-md-6 col-lg-4 mr-2 mb-4"
       >
         <router-link :to="{ name: 'edit', params: { id: note.id } }">
           <div class="card">

@@ -27,11 +27,47 @@ const editNote = (note) => {
 
 <template>
   <NavBar />
+
+  <!-- 在小螢幕上顯示的切換按鈕 -->
+
   <div class="container-fluid mx-auto row mb-5">
-    <div class="col-2">
+    <div class="d-lg-none p-3">
+      <button
+        class="btn btn-outline-primary"
+        type="button"
+        data-bs-toggle="offcanvas"
+        data-bs-target="#sidebarOffcanvas"
+        aria-controls="sidebarOffcanvas"
+      >
+        <i class="fa-solid fa-bars"></i> 筆記列表
+      </button>
+    </div>
+    <!-- 大螢幕：固定側邊欄 -->
+    <div class="col-lg-3 col-xl-2 d-none d-lg-block">
       <NoteList />
     </div>
-    <div class="col-10">
+
+    <!-- 小螢幕：Offcanvas 側邊欄 -->
+    <div
+      class="offcanvas offcanvas-start d-lg-none"
+      tabindex="-1"
+      id="sidebarOffcanvas"
+    >
+      <div class="offcanvas-header">
+        <!-- <h5 class="offcanvas-title">筆記應用</h5> -->
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="offcanvas"
+        ></button>
+      </div>
+      <div class="offcanvas-body p-0">
+        <NoteList />
+      </div>
+    </div>
+
+    <!-- 主要內容區域 -->
+    <div class="col-lg-9 col-xl-10 col-12">
       <router-view />
     </div>
   </div>
